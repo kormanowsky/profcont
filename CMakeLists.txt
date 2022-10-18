@@ -3,4 +3,6 @@ project(profcont)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(profcont src/main.cpp)
+include_directories(src)
+
+add_executable(profcont src/main.cpp src/source/file_source.cpp src/exception/prof_cont_exception.hpp src/exception/source_exception.hpp)
