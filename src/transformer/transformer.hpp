@@ -7,13 +7,14 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "transformer/base_transformer.hpp"
 
 class Transformer : public BaseTransformer
 {
 public:
-    void transform(BaseTarget &target, BaseRule &rule, BaseSource &source) override;
+    void transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<BaseRule> &rule, std::shared_ptr<BaseSource> &source) override;
 
     std::vector<std::string> &get_errors() override;
 

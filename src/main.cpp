@@ -8,9 +8,9 @@ int main()
 {
     std::string filename = "test.tex";
     std::string out_filename = "result.tex";
-    FileSource src(filename);
-    FileTarget tgt(out_filename);
-    NoVowelsRule rule;
+    std::shared_ptr<BaseSource> src = std::make_shared<FileSource>(filename);
+    std::shared_ptr<BaseTarget> tgt = std::make_shared<FileTarget>(out_filename);
+    std::shared_ptr<BaseRule> rule = std::make_shared<NoVowelsRule>();
     Transformer t;
     t.transform(tgt, rule, src);
     for (auto &error: t.get_errors())

@@ -4,20 +4,20 @@
 
 #include "transformer.hpp"
 
-void Transformer::transform(BaseTarget &target, BaseRule &rule, BaseSource &source)
+void Transformer::transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<BaseRule> &rule, std::shared_ptr<BaseSource> &source)
 {
-    while (!source.is_over())
+    while (!source->is_over())
     {
-        std::string data = source.get_data();
+        std::string data = source->get_data();
         std::string output;
-        int err_count = rule.handle_data(output, data);
+        int err_count = rule->handle_data(output, data);
         if (err_count != 0)
         {
             this->errors.emplace_back("errors:" + std::to_string(err_count));
         }
-        target.accept_data(output);
+        target->accept_data(output);
     }
-    target.accept_end();
+    target->accept_end();
 }
 
 std::vector<std::string> &Transformer::get_errors()
