@@ -2,6 +2,7 @@
 #include "source/file_source.hpp"
 #include "target/file_target.hpp"
 #include "rule/no_vowels_rule.hpp"
+#include "transformer/transformer.hpp"
 
 int main()
 {
@@ -10,17 +11,11 @@ int main()
     FileSource src(filename);
     FileTarget tgt(out_filename);
     NoVowelsRule rule;
-    while (!src.is_over())
+    Transformer t;
+    t.transform(tgt, rule, src);
+    for (auto &error: t.get_errors())
     {
-        std::string data = src.get_data();
-        std::string output;
-        int errors = rule.handle_data(output, data);
-        if (errors != 0)
-        {
-            std::cerr << "errors:" << errors << std::endl;
-        }
-        tgt.accept_data(output);
+        std::cerr << error << std::endl;
     }
-    tgt.accept_end();
     return 0;
 }
