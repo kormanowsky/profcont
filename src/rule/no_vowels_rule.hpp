@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "rule/base_rule.hpp"
+#include "base_rule.hpp"
 
 class NoVowelsRule : public BaseRule
 {
