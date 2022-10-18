@@ -7,11 +7,12 @@
 
 #include <string>
 #include <exception>
+#include <utility>
 
 class ProfContException : public std::exception
 {
 public:
-    explicit ProfContException(std::string &reason) : reason(reason), std::exception()
+    explicit ProfContException(std::string reason) : reason(std::move(reason)), std::exception()
     {
 
     }

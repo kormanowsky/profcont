@@ -16,7 +16,7 @@ class FileSource : public BaseSource
 public:
     explicit FileSource(std::string &filename) : BaseSource()
     {
-        this->file.open(filename);
+        this->file.open(filename, std::ios::in);
         if (!this->file.is_open())
         {
             throw SourceException("unable to open file: " + filename);
