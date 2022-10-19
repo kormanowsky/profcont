@@ -10,7 +10,15 @@
 int main(int argc, char **argv)
 {
     ArgparseConfigLoader config_loader(argc, argv);
-    auto config = config_loader.load_config();
+    std::shared_ptr<BaseConfig> config;
+    try
+    {
+        config = config_loader.load_config();
+    } catch (ProfContException &exc)
+    {
+        exit(-1);
+    }
+
     ExtensionLoader loader;
 
     RuleSolution rule_solution(config, loader);
