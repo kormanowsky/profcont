@@ -10,14 +10,13 @@
 #include <typeinfo>
 
 #include "config/base_config.hpp"
-#include "extension/extension_loader.hpp"
+#include "extension/base_extension_loader.hpp"
 #include "rule/complex_rule.hpp"
-#include "rule/no_vowels_rule.hpp"
 
 class RuleSolution
 {
 public:
-    RuleSolution(std::shared_ptr<BaseConfig> &config, ExtensionLoader &loader)
+    RuleSolution(std::shared_ptr<BaseConfig> &config, BaseExtensionLoader &loader)
     {
         this->rule = std::make_shared<ComplexRule>();
         for (auto &params: config->get_extension_params())
@@ -28,7 +27,7 @@ public:
         }
     }
 
-    std::shared_ptr<BaseRule> create_rule()
+    std::shared_ptr<BaseRule> create()
     {
         return this->rule;
     }
