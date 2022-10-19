@@ -6,7 +6,7 @@ build ubuntu:
   image: ubuntu
   before_script:
     - apt-get update -y
-    - apt-get install -y cmake gcc
+    - apt-get install -y cmake g++
   script:
     - cmake .
     - make
