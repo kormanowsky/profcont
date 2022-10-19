@@ -6,6 +6,7 @@
 #define PROFCONT_BASE_RULE_HPP
 
 #include <string>
+#include <memory>
 
 class BaseRule
 {
