@@ -8,6 +8,7 @@
 #include <dlfcn.h>
 #include <vector>
 #include <utility>
+#include <map>
 
 #include "exception/prof_cont_exception.hpp"
 #include "extension/base_extension_loader.hpp"
@@ -15,33 +16,23 @@
 class ExtensionLoader : public BaseExtensionLoader
 {
 public:
-    std::shared_ptr<BaseExtension> load_extension(std::string &name) override
-    {
-        auto filename = ExtensionLoader::resolve_name(name);
-        auto handle = dlopen(filename.c_str(), RTLD_LAZY);
-        if (!handle)
-        {
-            throw ProfContException("unable to open extension " + name);
-        }
-        auto *creator = (ExtensionCreator *) dlsym(handle, "extension_creator");
-        auto *deleter = (ExtensionDeleter *) dlsym(handle, "extension_deleter");
-        if (creator == nullptr || deleter == nullptr)
-        {
-            throw ProfContException("unable to load extension_creator, extension_deleter from extension " + name);
-        }
-        auto extension = std::shared_ptr<BaseExtension>(creator(), deleter);
-        if (extension == nullptr)
-        {
-            throw ProfContException("unable to load extension object from extension " + name);
-        }
-        return extension;
-    }
+    std::shared_ptr<BaseExtension> load_extension(std::string &name) override;
+
+    std::shared_ptr<BaseExtension> load_extension(std::string &name, std::string &arg) override;
+
+    void unload_extension(std::string &name) override;
+
+    ~ExtensionLoader();
 
 protected:
-    static std::string resolve_name(std::string &name)
-    {
-        return "lib" + name + ".dylib";
-    }
+    static std::string resolve_name(std::string &name);
+
+    void *open_handle(std::string &name);
+
+    static std::shared_ptr<BaseExtension> make_extension(ExtensionCreator *creator, ExtensionDeleter *deleter, std::string &arg);
+
+private:
+    std::map<std::string, void *> handles;
 };
 
 

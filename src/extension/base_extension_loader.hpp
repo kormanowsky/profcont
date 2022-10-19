@@ -11,6 +11,10 @@ class BaseExtensionLoader
 {
 public:
     virtual std::shared_ptr<BaseExtension> load_extension(std::string &name) = 0;
+
+    virtual std::shared_ptr<BaseExtension> load_extension(std::string &name, std::string &arg) = 0;
+
+    virtual void unload_extension(std::string &name) = 0;
 };
 
 

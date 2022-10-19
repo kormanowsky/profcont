@@ -16,7 +16,7 @@ public:
     virtual ~BaseExtension() = default;
 };
 
-using ExtensionCreator = BaseExtension *();
+using ExtensionCreator = BaseExtension *(std::string &arg);
 using ExtensionDeleter = void(BaseExtension *);
 
 #endif //PROFCONT_BASE_EXTENSION_HPP
