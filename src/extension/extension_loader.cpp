@@ -3,6 +3,30 @@
 //
 
 #include "extension_loader.hpp"
+#include <iostream>
+
+ExtensionLoader::ExtensionLoader()
+{
+    std::string path = std::getenv("PATH");
+    std::string::size_type colon_pos = path.find(':');
+    if (colon_pos == std::string::npos)
+    {
+        this->extension_paths.emplace_back(path);
+    }
+    else
+    {
+        std::string::size_type prev_colon_pos = -1;
+        do
+        {
+            this->extension_paths.emplace_back(
+                path.substr(prev_colon_pos + 1, colon_pos - prev_colon_pos - 1)
+            );
+            prev_colon_pos = colon_pos;
+            colon_pos = path.find(':', colon_pos + 1);
+        } while (colon_pos != std::string::npos);
+        this->extension_paths.emplace_back(path.substr(prev_colon_pos + 1));
+    }
+}
 
 std::shared_ptr<BaseExtension> ExtensionLoader::load_extension(std::string &name, std::string &arg)
 {
@@ -44,7 +68,15 @@ std::string ExtensionLoader::resolve_name(std::string &name)
 #else
     filename = "lib" + name + ".so";
 #endif
-    return this->extension_path.append(filename).string();
+    for (auto &path: this->extension_paths)
+    {
+        auto lib_path = std::filesystem::path(path).append(filename);
+        if (exists(lib_path))
+        {
+            return lib_path.string();
+        }
+    }
+    return "";
 }
 
 void *ExtensionLoader::open_handle(std::string &name)

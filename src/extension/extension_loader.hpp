@@ -18,8 +18,7 @@ class ExtensionLoader : public BaseExtensionLoader
 {
 public:
 
-    ExtensionLoader(std::filesystem::path &extension_path) : extension_path(extension_path)
-    {}
+    ExtensionLoader();
 
     std::shared_ptr<BaseExtension> load_extension(std::string &name) override;
 
@@ -37,7 +36,7 @@ protected:
     static std::shared_ptr<BaseExtension> make_extension(ExtensionCreator *creator, ExtensionDeleter *deleter, std::string &arg);
 
 private:
-    std::filesystem::path extension_path;
+    std::vector<std::string> extension_paths;
     std::map<std::string, void *> handles;
 };
 

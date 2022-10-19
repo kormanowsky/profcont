@@ -20,8 +20,7 @@ int main(int argc, char **argv)
         exit(-1);
     }
 
-    auto parent_path = absolute(std::filesystem::path(argv[0])).parent_path();
-    std::shared_ptr<BaseExtensionLoader> loader = std::make_shared<ExtensionLoader>(parent_path);
+    std::shared_ptr<BaseExtensionLoader> loader = std::make_shared<ExtensionLoader>();
 
     RuleSolution rule_solution(config, loader);
     SourceSolution source_solution(config, loader);
