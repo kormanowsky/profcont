@@ -5,6 +5,8 @@
 #ifndef PROFCONT_BASE_CONFIG_LOADER_HPP
 #define PROFCONT_BASE_CONFIG_LOADER_HPP
 
+#include <memory>
+
 #include "config/base_config.hpp"
 
 class BaseConfigLoader
