@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.23)
-project(ext_aa)
+cmake_minimum_required(VERSION 3.17)
+project(profcont_aa)
 
 set(CMAKE_CXX_STANDARD 14)
 
