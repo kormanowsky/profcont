@@ -38,7 +38,11 @@ void ExtensionLoader::unload_extension(std::string &name)
 
 std::string ExtensionLoader::resolve_name(std::string &name)
 {
+#if __APPLE__
     return "lib" + name + ".dylib";
+#else
+    return "lib" + name + ".so";
+#endif
 }
 
 void *ExtensionLoader::open_handle(std::string &name)
