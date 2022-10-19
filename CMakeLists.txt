@@ -33,4 +33,4 @@ add_executable(
         src/source/source_solution.hpp
         src/target/target_solution.cpp
         src/target/target_solution.hpp
-)
+        ext_entrypoint.hpp)

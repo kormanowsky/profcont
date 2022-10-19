@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "../../../src/extension/base_extension.hpp"
+#include "../../../ext_entrypoint.hpp"
 
 class StringAtLeast4Sym : public BaseRule
 {
