@@ -10,17 +10,8 @@
 #include "source/file_source.hpp"
 #include "target/file_target.hpp"
 #include "rule/no_vowels_rule.hpp"
+#include "rule/rule_solution.hpp"
 #include "transformer/transformer.hpp"
-
-class Solution
-{
-public:
-    Solution(int argc, char **argv)
-    {}
-
-    void run()
-    {}
-};
 
 int main(int argc, char **argv)
 {
@@ -39,17 +30,9 @@ int main(int argc, char **argv)
         std::cerr << err.what() << std::endl;
         return 1;
     }
-    // а пока так
     ExtensionLoader loader;
-    std::shared_ptr<BaseRule> rule = std::make_shared<NoVowelsRule>();
-    auto extensions = parser.get<std::vector<std::string>>("--extension");
-    std::string our_extension = "ext_aa";
-    auto occurrence = std::find(extensions.begin(), extensions.end(), our_extension);
-    if (occurrence != extensions.end())
-    {
-        auto ext = loader.load_extension(*occurrence);
-        rule = ext->get_rule();
-    }
+    RuleSolution solution(parser, loader);
+    std::shared_ptr<BaseRule> rule = solution.create_rule();
     std::string filename = parser.get("input_file");
     std::string out_filename = parser.get("--output");
     std::shared_ptr<BaseSource> src = std::make_shared<FileSource>(filename);

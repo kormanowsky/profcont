@@ -10,6 +10,11 @@
 class BaseRule
 {
 public:
+    virtual bool add(std::shared_ptr<BaseRule> &rule)
+    {
+        return false;
+    };
+
     virtual int handle_data(std::string &output, std::string &data) = 0;
 };
 
