@@ -4,7 +4,6 @@ project(profcont)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(src)
-#add_compile_options(-D AA)
 add_executable(
         profcont
         src/main.cpp

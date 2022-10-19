@@ -1,0 +1,18 @@
+stages:
+  - build
+
+build ubuntu:
+  stage: build
+  image: ubuntu
+  before_script:
+    - apt-get update -y
+    - apt-get install -y cmake gcc
+  script:
+    - cmake .
+    - make
+  after_script:
+    - mv cmake-build-debug/profcont .
+  artifacts:
+    paths:
+      - profcont
+    expire_in: 30 days
