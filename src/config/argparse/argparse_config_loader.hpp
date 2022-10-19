@@ -46,26 +46,26 @@ class ArgparseConfigLoader : public BaseConfigLoader
 public:
     explicit ArgparseConfigLoader(int argc, char **argv) : argc(argc), argv(argv)
     {
-        this->parser = argparse::ArgumentParser("profcont");
-        this->parser.add_description("Un Profesor Contento!\n"
+        this->parser = std::make_shared<argparse::ArgumentParser>("profcont");
+        this->parser->add_description("Un Profesor Contento!\n"
                                      "Transforms text files and performs useful checks to help students pass their reports quickly");
-        this->parser.add_argument("input_file").help("input file").required();
-        this->parser.add_argument("-o", "--output").help("output file (if needed)").default_value("/dev/null");
-        this->parser.add_argument("-e", "--extension").help("one or more extensions (if needed)").append();
+        this->parser->add_argument("input_file").help("input file").required();
+        this->parser->add_argument("-o", "--output").help("output file (if needed)").default_value("/dev/null");
+        this->parser->add_argument("-e", "--extension").help("one or more extensions (if needed)").append();
     }
 
     std::shared_ptr<BaseConfig> load_config() override
     {
         try
         {
-            parser.parse_args(argc, argv);
+            this->parser->parse_args(this->argc, this->argv);
         } catch (const std::runtime_error &err)
         {
-            std::cerr << parser << std::endl;
+            std::cerr << *this->parser << std::endl;
             std::cerr << err.what() << std::endl;
             throw ProfContException("config loader unable to load config");
         }
-        auto input_file = parser.get("input_file"), output_file = parser.get("--output");
+        auto input_file = parser->get("input_file"), output_file = parser->get("--output");
         auto extension_params = this->load_extension_params();
         return std::make_shared<ArgparseConfig>(
             input_file,
@@ -78,7 +78,7 @@ protected:
     std::vector<std::pair<std::string, std::string>> load_extension_params()
     {
         std::vector<std::pair<std::string, std::string>> extension_params;
-        auto extensions = parser.get<std::vector<std::string>>("--extension");
+        auto extensions = parser->get<std::vector<std::string>>("--extension");
         for (auto &extension: extensions)
         {
             auto eq_pos = extension.find("=");
@@ -104,9 +104,9 @@ protected:
     }
 
 private:
+    std::shared_ptr<argparse::ArgumentParser> parser;
     int argc;
     char **argv;
-    argparse::ArgumentParser parser;
 };
 
 
