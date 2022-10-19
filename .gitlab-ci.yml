@@ -1,7 +1,7 @@
 stages:
   - build
 
-build ubuntu:
+profcont build ubuntu:
   stage: build
   image: ubuntu
   before_script:
@@ -13,4 +13,19 @@ build ubuntu:
   artifacts:
     paths:
       - profcont
+    expire_in: 30 days
+
+profcont_aa build ubuntu:
+  stage: build
+  image: ubuntu
+  before_script:
+    - apt-get update -y
+    - apt-get install -y cmake g++
+  script:
+    - cd extensions/aa
+    - cmake .
+    - make
+  artifacts:
+    paths:
+      - libprofcont_aa.so
     expire_in: 30 days
