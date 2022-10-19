@@ -30,7 +30,7 @@ int main(int argc, char **argv)
     auto source = source_solution.create();
 
     Transformer t;
-    t.transform(
+    int rc = t.transform(
         target,
         rule,
         source
@@ -40,5 +40,5 @@ int main(int argc, char **argv)
     {
         std::cerr << error << std::endl;
     }
-    return 0;
+    return rc;
 }

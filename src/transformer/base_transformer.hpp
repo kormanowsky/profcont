@@ -15,7 +15,7 @@
 class BaseTransformer
 {
 public:
-    virtual void transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<BaseRule> &rule, std::shared_ptr<BaseSource> &source) = 0;
+    virtual int transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<BaseRule> &rule, std::shared_ptr<BaseSource> &source) = 0;
 
     virtual std::vector<std::string> &get_errors() = 0;
 };

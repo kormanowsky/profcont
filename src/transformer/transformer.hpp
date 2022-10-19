@@ -14,7 +14,7 @@
 class Transformer : public BaseTransformer
 {
 public:
-    void transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<BaseRule> &rule, std::shared_ptr<BaseSource> &source) override;
+    int transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<BaseRule> &rule, std::shared_ptr<BaseSource> &source) override;
 
     std::vector<std::string> &get_errors() override;
 

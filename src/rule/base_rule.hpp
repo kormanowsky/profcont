@@ -15,7 +15,7 @@ public:
         return false;
     };
 
-    virtual int handle_data(std::string &output, std::string &data) = 0;
+    virtual int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) = 0;
 };
 
 

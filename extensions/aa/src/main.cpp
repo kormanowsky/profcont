@@ -1,18 +1,18 @@
-
-
 #ifndef EXT_AA
 #define EXT_AA
 
 #include <iostream>
+#include <vector>
 #include "../../../src/extension/base_extension.hpp"
 
 class StringAtLeast4Sym : public BaseRule
 {
-    int handle_data(std::string &output, std::string &data) override
+    int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) override
     {
         if (data.length() < 4)
         {
             output = "";
+            errors.emplace_back("line length is less than 4: " + data);
             return 1;
         }
         output = data;

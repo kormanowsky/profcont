@@ -13,7 +13,7 @@
 class NoVowelsRule : public BaseRule
 {
 public:
-    int handle_data(std::string &output, std::string &data) override;
+    int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) override;
 };
 
 
