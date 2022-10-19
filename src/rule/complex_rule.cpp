@@ -7,7 +7,7 @@
 int ComplexRule::handle_data(std::string &output, std::string &data)
 {
     int res = 0;
-    std::string tmp;
+    std::string tmp = data;
     for (auto &rule: this->rules)
     {
         res += rule->handle_data(tmp, data);
