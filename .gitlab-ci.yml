@@ -10,8 +10,6 @@ build ubuntu:
   script:
     - cmake .
     - make
-  after_script:
-    - mv cmake-build-debug/profcont .
   artifacts:
     paths:
       - profcont
