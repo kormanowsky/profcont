@@ -12,7 +12,7 @@
 class TargetSolution
 {
 public:
-    TargetSolution(std::shared_ptr<BaseConfig> &config, BaseExtensionLoader &loader);
+    TargetSolution(std::shared_ptr<BaseConfig> &config, std::shared_ptr<BaseExtensionLoader> &loader);
 
     std::shared_ptr<BaseTarget> create();
 

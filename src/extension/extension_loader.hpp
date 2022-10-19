@@ -9,6 +9,7 @@
 #include <vector>
 #include <utility>
 #include <map>
+#include <filesystem>
 
 #include "exception/prof_cont_exception.hpp"
 #include "extension/base_extension_loader.hpp"
@@ -16,6 +17,10 @@
 class ExtensionLoader : public BaseExtensionLoader
 {
 public:
+
+    ExtensionLoader(std::filesystem::path &extension_path) : extension_path(extension_path)
+    {}
+
     std::shared_ptr<BaseExtension> load_extension(std::string &name) override;
 
     std::shared_ptr<BaseExtension> load_extension(std::string &name, std::string &arg) override;
@@ -25,13 +30,14 @@ public:
     ~ExtensionLoader();
 
 protected:
-    static std::string resolve_name(std::string &name);
+    std::string resolve_name(std::string &name);
 
     void *open_handle(std::string &name);
 
     static std::shared_ptr<BaseExtension> make_extension(ExtensionCreator *creator, ExtensionDeleter *deleter, std::string &arg);
 
 private:
+    std::filesystem::path extension_path;
     std::map<std::string, void *> handles;
 };
 

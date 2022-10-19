@@ -1,4 +1,5 @@
 #include <iostream>
+#include <filesystem>
 
 #include "config/argparse/argparse_config_loader.hpp"
 #include "extension/extension_loader.hpp"
@@ -19,22 +20,31 @@ int main(int argc, char **argv)
         exit(-1);
     }
 
-    ExtensionLoader loader;
+    auto parent_path = absolute(std::filesystem::path(argv[0])).parent_path();
+    std::shared_ptr<BaseExtensionLoader> loader = std::make_shared<ExtensionLoader>(parent_path);
 
     RuleSolution rule_solution(config, loader);
     SourceSolution source_solution(config, loader);
     TargetSolution target_solution(config, loader);
 
-    auto target = target_solution.create();
-    auto rule = rule_solution.create();
-    auto source = source_solution.create();
-
     Transformer t;
-    int rc = t.transform(
-        target,
-        rule,
-        source
-    );
+    int rc;
+
+    try
+    {
+        auto target = target_solution.create();
+        auto rule = rule_solution.create();
+        auto source = source_solution.create();
+        rc = t.transform(
+            target,
+            rule,
+            source
+        );
+    } catch (ProfContException &exc)
+    {
+        std::cerr << exc.what() << std::endl;
+        return 1;
+    }
 
     for (auto &error: t.get_errors())
     {

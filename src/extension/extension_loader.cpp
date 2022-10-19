@@ -38,11 +38,13 @@ void ExtensionLoader::unload_extension(std::string &name)
 
 std::string ExtensionLoader::resolve_name(std::string &name)
 {
+    std::string filename;
 #if __APPLE__
-    return "lib" + name + ".dylib";
+    filename = "lib" + name + ".dylib";
 #else
-    return "lib" + name + ".so";
+    filename = "lib" + name + ".so";
 #endif
+    return this->extension_path.append(filename).string();
 }
 
 void *ExtensionLoader::open_handle(std::string &name)
@@ -51,7 +53,7 @@ void *ExtensionLoader::open_handle(std::string &name)
     {
         return this->handles[name];
     }
-    auto filename = ExtensionLoader::resolve_name(name);
+    auto filename = this->resolve_name(name);
     auto handle = dlopen(filename.c_str(), RTLD_LAZY);
     if (!handle)
     {

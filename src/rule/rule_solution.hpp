@@ -16,15 +16,14 @@
 class RuleSolution
 {
 public:
-    RuleSolution(std::shared_ptr<BaseConfig> &config, BaseExtensionLoader &loader);
+    RuleSolution(std::shared_ptr<BaseConfig> &config, std::shared_ptr<BaseExtensionLoader> &loader);
 
-    std::shared_ptr<BaseRule> create()
-    {
-        return this->rule;
-    }
+    std::shared_ptr<BaseRule> create();
 
 private:
     std::shared_ptr<BaseRule> rule;
+    std::shared_ptr<BaseConfig> config;
+    std::shared_ptr<BaseExtensionLoader> loader;
 };
 
 

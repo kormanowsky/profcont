@@ -12,7 +12,7 @@
 class SourceSolution
 {
 public:
-    SourceSolution(std::shared_ptr<BaseConfig> &config, BaseExtensionLoader &loader);
+    SourceSolution(std::shared_ptr<BaseConfig> &config, std::shared_ptr<BaseExtensionLoader> &loader);
 
     std::shared_ptr<BaseSource> create();
 

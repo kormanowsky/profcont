@@ -4,7 +4,7 @@
 
 #include "target_solution.hpp"
 
-TargetSolution::TargetSolution(std::shared_ptr<BaseConfig> &config, BaseExtensionLoader &loader)
+TargetSolution::TargetSolution(std::shared_ptr<BaseConfig> &config, std::shared_ptr<BaseExtensionLoader> &loader)
 {
     this->output_file = config->get_output_file();
 }

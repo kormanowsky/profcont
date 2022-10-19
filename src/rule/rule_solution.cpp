@@ -4,13 +4,20 @@
 
 #include "rule_solution.hpp"
 
-RuleSolution::RuleSolution(std::shared_ptr<BaseConfig> &config, BaseExtensionLoader &loader)
+RuleSolution::RuleSolution(std::shared_ptr<BaseConfig> &config, std::shared_ptr<BaseExtensionLoader> &loader)
 {
     this->rule = std::make_shared<ComplexRule>();
-    for (auto &params: config->get_extension_params())
+    this->config = config;
+    this->loader = loader;
+}
+
+std::shared_ptr<BaseRule> RuleSolution::create()
+{
+    for (auto &params: this->config->get_extension_params())
     {
-        auto ext = loader.load_extension(params.first, params.second);
+        auto ext = this->loader->load_extension(params.first, params.second);
         auto _rule = ext->get_rule();
         this->rule->add(_rule);
     }
+    return this->rule;
 }
