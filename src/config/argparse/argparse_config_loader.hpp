@@ -48,9 +48,9 @@ public:
     {
         this->parser = std::make_shared<argparse::ArgumentParser>("profcont");
         this->parser->add_description("Un Profesor Contento!\n"
-                                     "Transforms text files and performs useful checks to help students pass their reports quickly");
+                                      "Transforms text files and performs useful checks to help students pass their reports quickly");
         this->parser->add_argument("input_file").help("input file").required();
-        this->parser->add_argument("-o", "--output").help("output file (if needed)").default_value("/dev/null");
+        this->parser->add_argument("-o", "--output").help("output file (if needed)");
         this->parser->add_argument("-e", "--extension").help("one or more extensions (if needed)").append();
     }
 
@@ -65,7 +65,12 @@ public:
             std::cerr << err.what() << std::endl;
             throw ProfContException("config loader unable to load config");
         }
-        auto input_file = parser->get("input_file"), output_file = parser->get("--output");
+        auto input_file = parser->get("input_file");
+        std::string output_file = "/dev/null";
+        if (auto of = parser->present("--output"))
+        {
+            output_file = *of;
+        }
         auto extension_params = this->load_extension_params();
         return std::make_shared<ArgparseConfig>(
             input_file,
