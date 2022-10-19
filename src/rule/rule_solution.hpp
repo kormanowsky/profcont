@@ -9,7 +9,7 @@
 #include <string>
 #include <typeinfo>
 
-#include "dependencies/argparse/argparse.hpp"
+#include "config/base_config.hpp"
 #include "extension/extension_loader.hpp"
 #include "rule/complex_rule.hpp"
 #include "rule/no_vowels_rule.hpp"
@@ -17,29 +17,14 @@
 class RuleSolution
 {
 public:
-    RuleSolution(argparse::ArgumentParser &parser, ExtensionLoader &loader)
+    RuleSolution(std::shared_ptr<BaseConfig> &config, ExtensionLoader &loader)
     {
         this->rule = std::make_shared<ComplexRule>();
-        auto extensions = parser.get<std::vector<std::string>>("--extension");
-        for (auto &extension: extensions)
+        for (auto &params: config->get_extension_params())
         {
-            std::shared_ptr<BaseExtension> ext;
-            auto eq_pos = extension.find("=");
-            if (eq_pos == std::string::npos)
-            {
-                ext = loader.load_extension(extension);
-            }
-            else if (std::count(extension.begin(), extension.end(), '=') != 1)
-            {
-                throw ProfContException("invalid extension with argument: " + extension + ". There must be 0 or 1 = in extension");
-            }
-            else
-            {
-                std::string name = extension.substr(0, eq_pos), arg = extension.substr(eq_pos);
-                ext = loader.load_extension(name, arg);
-            }
-            auto ext_rule = ext->get_rule();
-            this->rule->add(ext_rule);
+            auto ext = loader.load_extension(params.first, params.second);
+            auto _rule = ext->get_rule();
+            this->rule->add(_rule);
         }
     }
 
