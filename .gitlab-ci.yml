@@ -25,6 +25,7 @@ profcont_aa build ubuntu:
     - cd extensions/aa
     - cmake .
     - make
+    - mv libprofcont_aa.so ../../
   artifacts:
     paths:
       - libprofcont_aa.so
