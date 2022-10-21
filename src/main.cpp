@@ -1,5 +1,4 @@
 #include <iostream>
-#include <filesystem>
 
 #include "config/argparse/argparse_config_loader.hpp"
 #include "extension/extension_loader.hpp"
