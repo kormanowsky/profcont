@@ -15,7 +15,7 @@ int Transformer::transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<
         target->accept_data(output);
     }
     rule->handle_end(output, errors);
-    target->accept_end(<#initializer#>);
+    target->accept_end(output);
     return res;
 }
 

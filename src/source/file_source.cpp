@@ -7,7 +7,7 @@
 std::string FileSource::get_data()
 {
     std::string line;
-    this->file >> line;
+    std::getline(this->file, line);
     return line;
 }
 
