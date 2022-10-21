@@ -6,12 +6,13 @@
 #define PROFCONT_BASE_EXTENSION_HPP
 
 #include <memory>
+#include <vector>
 #include "../rule/base_rule.hpp"
 
 class BaseExtension
 {
 public:
-    virtual std::shared_ptr<BaseRule> get_rule() = 0;
+    virtual std::vector<std::shared_ptr<BaseRule>> get_rules() = 0;
 
     virtual ~BaseExtension() = default;
 };

@@ -7,13 +7,21 @@
 
 #include <string>
 #include <vector>
+#include <regex>
 
-#include "../../../../ext_entrypoint.hpp"
+#include <profcont/ext_entrypoint.hpp>
 
 class NoColoredText : public BaseRule
 {
 public:
     int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) override;
+
+    int handle_end(std::string &output, std::vector<std::string> &errors) override;
+
+private:
+    static std::regex get_color_regex();
+
+    int line = 0;
 };
 
 

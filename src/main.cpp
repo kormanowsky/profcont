@@ -1,4 +1,6 @@
 #include <iostream>
+#include <utility>
+#include <string>
 
 #include "config/argparse/argparse_config_loader.hpp"
 #include "extension/extension_loader.hpp"
@@ -9,6 +11,7 @@
 
 int main(int argc, char **argv)
 {
+    setlocale(LC_ALL, "Russian");
     ArgparseConfigLoader config_loader(argc, argv);
     std::shared_ptr<BaseConfig> config;
     try
@@ -43,6 +46,10 @@ int main(int argc, char **argv)
         std::cerr << exc.what() << std::endl;
         return 1;
     }
+
+    auto errors = t.get_errors();
+
+    std::cerr << "profcont found " << errors.size() << " error" + std::string(errors.size() > 1 ? "s" : "") + ":" << std::endl;
 
     for (auto &error: t.get_errors())
     {

@@ -12,6 +12,7 @@
 class ComplexRule : public BaseRule
 {
 public:
+
     bool add(std::shared_ptr<BaseRule> &rule) override;
 
     int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) override;
