@@ -5,10 +5,15 @@
 #ifndef PROFCONT_AA_NO_COLORED_TEXT_HPP
 #define PROFCONT_AA_NO_COLORED_TEXT_HPP
 
+#include <string>
+#include <vector>
 
-class NoColoredText
+#include "../../../../ext_entrypoint.hpp"
+
+class NoColoredText : public BaseRule
 {
-
+public:
+    int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) override;
 };
 
 
