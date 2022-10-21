@@ -12,7 +12,7 @@ class BaseTarget
 public:
     virtual void accept_data(std::string &data) = 0;
 
-    virtual void accept_end() = 0;
+    virtual void accept_end(std::string &final_data) = 0;
 };
 
 

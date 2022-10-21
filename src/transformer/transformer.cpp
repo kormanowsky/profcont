@@ -6,15 +6,16 @@
 
 int Transformer::transform(std::shared_ptr<BaseTarget> &target, std::shared_ptr<BaseRule> &rule, std::shared_ptr<BaseSource> &source)
 {
+    std::string output;
     int res = 0;
     while (!source->is_over())
     {
         std::string data = source->get_data();
-        std::string output;
         res += rule->handle_data(output, this->errors, data);
         target->accept_data(output);
     }
-    target->accept_end();
+    rule->handle_end(output, errors);
+    target->accept_end(<#initializer#>);
     return res;
 }
 

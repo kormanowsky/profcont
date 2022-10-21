@@ -25,7 +25,7 @@ public:
 
     void accept_data(std::string &data) override;
 
-    void accept_end() override;
+    void accept_end(std::string &final_data) override;
 
     ~FileTarget()
     {

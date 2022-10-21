@@ -9,7 +9,7 @@ void FileTarget::accept_data(std::string &data)
     this->file << data << std::endl;
 }
 
-void FileTarget::accept_end()
+void FileTarget::accept_end(std::string &final_data)
 {
-    this->file << "FINISH!" << std::endl;
+    this->file << final_data << std::endl;
 }
