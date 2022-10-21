@@ -13,12 +13,16 @@
 
 #include <profcont/ext_entrypoint.hpp>
 
+#include "entitiles/chapter.hpp"
+
 class HasRequiredChapters : public BaseRule
 {
 public:
-    explicit HasRequiredChapters(const std::vector<std::pair<std::string, bool>> &chapters) :
-        chapters(chapters), chapter_it(chapters.cbegin())
-    {}
+    explicit HasRequiredChapters(const std::vector<std::shared_ptr<Chapter>> &chapters) :
+        chapters(chapters)
+    {
+        this->chapter_it = this->chapters.cbegin();
+    }
 
     int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) override;
 
@@ -27,8 +31,8 @@ public:
 private:
     static std::regex get_chapter_regex();
 
-    std::vector<std::pair<std::string, bool>> chapters;
-    std::vector<std::pair<std::string, bool>>::const_iterator chapter_it;
+    std::vector<std::shared_ptr<Chapter>> chapters;
+    std::vector<std::shared_ptr<Chapter>>::const_iterator chapter_it;
 };
 
 

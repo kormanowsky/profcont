@@ -17,6 +17,8 @@ public:
 
     int handle_data(std::string &output, std::vector<std::string> &errors, std::string &data) override;
 
+    int handle_end(std::string &output, std::vector<std::string> &errors) override;
+
 private:
     std::vector<std::shared_ptr<BaseRule>> rules;
 };

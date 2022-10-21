@@ -13,8 +13,6 @@ add_executable(
         src/target/file_target.cpp
         src/target/file_target.hpp
         src/exception/target_exception.hpp
-        src/rule/no_vowels_rule.cpp
-        src/rule/no_vowels_rule.hpp
         src/transformer/transformer.cpp
         src/transformer/transformer.hpp
         src/extension/base_extension_loader.hpp

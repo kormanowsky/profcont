@@ -17,6 +17,19 @@ int ComplexRule::handle_data(std::string &output, std::vector<std::string> &erro
     return res;
 }
 
+int ComplexRule::handle_end(std::string &output, std::vector<std::string> &errors)
+{
+    int res = 0;
+    std::string tmp;
+    for (auto &rule: this->rules)
+    {
+        res += rule->handle_end(tmp, errors);
+        // TODO: затирание результатов?
+    }
+    output = tmp;
+    return res;
+}
+
 bool ComplexRule::add(std::shared_ptr<BaseRule> &rule)
 {
     this->rules.emplace_back(rule);

@@ -17,40 +17,42 @@ int HasRequiredChapters::handle_data(std::string &output, std::vector<std::strin
             return 1;
         }
         auto expected_chapter = *this->chapter_it;
-        if (expected_chapter.first != chapter_name)
+        ++this->chapter_it;
+        if (expected_chapter->get_name() != chapter_name)
         {
             errors.emplace_back("profcont_aa.has_required_chapters: unexpected chapter: " +
-                chapter_name + ", expected " + expected_chapter.first);
+                chapter_name + ", expected " + expected_chapter->get_name());
             return 1;
         }
-        if (star == "*" && expected_chapter.second)
+        if (star == "*" && !expected_chapter->is_starred())
         {
             errors.emplace_back("profcont_aa.has_required_chapters: missing number for chapter: " +
                 chapter_name + ", remove * from \\chapter*");
             return 1;
         }
-        if (star.empty() && !expected_chapter.second)
+        if (star.empty() && expected_chapter->is_starred())
         {
             errors.emplace_back("profcont_aa.has_required_chapters: extra number for chapter: " +
                 chapter_name + ", add * to \\chapter");
             return 1;
         }
-        ++chapter_it;
     }
     return 0;
 }
 
 int HasRequiredChapters::handle_end(std::string &output, std::vector<std::string> &errors)
 {
+    output = "";
     int res = 0;
-    if (this->chapter_it < this->chapters.cend())
+    auto end_it = this->chapters.cend();
+    auto cur_it = this->chapter_it;
+    if (cur_it < end_it)
     {
-        std::string error = "profcont_aa.has_required_chapters: missing chapters: ";
-        while (this->chapter_it < this->chapters.cend())
+        while (cur_it < end_it)
         {
-            error += (*this->chapter_it).first + ";";
+            errors.emplace_back("profcont_aa.has_required_chapters: missing chapter: " + (*cur_it)->get_name());
+            ++cur_it;
         }
-        errors.emplace_back(error);
         res = 1;
     }
     this->chapter_it = this->chapters.cbegin();

@@ -11,6 +11,7 @@
 
 int main(int argc, char **argv)
 {
+    std::cout << "profcont by Mikhail Kormanpvskiy, BMSTU" << std::endl;
     setlocale(LC_ALL, "Russian");
     ArgparseConfigLoader config_loader(argc, argv);
     std::shared_ptr<BaseConfig> config;
@@ -48,12 +49,12 @@ int main(int argc, char **argv)
     }
 
     auto errors = t.get_errors();
-
-    std::cerr << "profcont found " << errors.size() << " error" + std::string(errors.size() > 1 ? "s" : "") + ":" << std::endl;
-
     for (auto &error: t.get_errors())
     {
         std::cerr << error << std::endl;
     }
+
+    std::cout << "profcont found " << errors.size() << " error" + std::string(errors.size() != 1 ? "s" : "") + "" << std::endl;
+
     return rc;
 }
