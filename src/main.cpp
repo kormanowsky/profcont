@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv)
 {
-    std::cout << "profcont by Mikhail Kormanpvskiy, BMSTU" << std::endl;
+    std::cout << "profcont by Mikhail Kormanovskiy, BMSTU" << std::endl;
     setlocale(LC_ALL, "Russian");
     ArgparseConfigLoader config_loader(argc, argv);
     std::shared_ptr<BaseConfig> config;
